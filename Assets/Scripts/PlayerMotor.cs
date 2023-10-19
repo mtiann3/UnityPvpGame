@@ -101,7 +101,7 @@ public float crouchSpeed = 2.0f; // Speed while crouching
         lerpCrouch = true;
     }
 
-    public void Sprint()
+    public void StartSprinting()
     {
         sprinting = true;
         speed = sprintSpeed;
@@ -150,6 +150,7 @@ public float crouchSpeed = 2.0f; // Speed while crouching
     {
         Crouch();
     }
+ 
 }
 
 //... (rest of the code)

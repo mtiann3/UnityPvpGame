@@ -49,33 +49,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pickup",
-                    "type": "Button",
-                    "id": "44abf159-c142-428f-a04e-768c62f6106e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "32042ba8-59a4-4f4c-a37f-494c369fc4d7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Drop",
-                    "type": "Button",
-                    "id": "71d208dc-c633-44e1-98af-1fd3b6c0784b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -287,32 +260,56 @@
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "OnWeapon",
+            "id": "d7dbf672-d9d6-4f16-b31f-223660887145",
+            "actions": [
+                {
+                    "name": "Drop",
+                    "type": "Button",
+                    "id": "fbdf0772-3688-4abe-b788-655e9c53e156",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "6d725d85-6bac-468b-b93e-746f9614d5df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "3597893b-6968-4003-bf48-0f1df4b9b639",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "43b87b88-f66b-4fca-8187-f2b2f5f1f150",
-                    "path": "<Keyboard>/f",
+                    "id": "53f03485-44d4-4932-ba72-d5f06e1e072e",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pickup",
+                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "fac787f7-3727-49ef-9039-4f611ae851b0",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pickup",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "88a691ca-3e12-463c-8799-a94b2c4eb8ba",
+                    "id": "0de8c675-f3c1-480d-a570-ba7c26372f04",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -323,7 +320,7 @@
                 },
                 {
                     "name": "",
-                    "id": "1563b072-4431-44f6-9dc8-df453c887e1c",
+                    "id": "030591d3-0da2-48c2-a905-b9e06eb3e48e",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
@@ -334,12 +331,23 @@
                 },
                 {
                     "name": "",
-                    "id": "60325a75-52f3-468e-bf14-6faebf4c8fed",
-                    "path": "<Keyboard>/t",
+                    "id": "f69ef034-28bd-4d53-aefe-422e39c62f03",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drop",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1aa44b67-29f4-47ea-a95a-7e715617ae94",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

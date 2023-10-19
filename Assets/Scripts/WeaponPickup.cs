@@ -6,78 +6,48 @@ public class WeaponPickup : MonoBehaviour
 {
     public GameObject weapon;
     public float pickupRange = 3f;
-    public TextMeshProUGUI pickupText; // Assigned in the inspector
-    private bool isPickedUp = false;
+    public Transform player;
+    public TextMeshProUGUI pickupText;
 
-    public void OnPickup()
-    {
-        if (!isPickedUp)
-        {
-            PickUp();
-        }
-    }
-
-    public void OnShoot()
-    {
-        if (isPickedUp)
-        {
-            Shoot();
-        }
-    }
-
-    public void OnDrop()
-    {
-        if (isPickedUp && weapon != null)
-        {
-            DropWeapon();
-        }
-    }
+    public bool isInRange = false;
+    public bool hasPickedUp = false;
 
     private void Update()
     {
-        if (pickupText != null)
+        if (!hasPickedUp)
         {
-            float distance = Vector3.Distance(transform.position, weapon.transform.position);
-
-            if (!isPickedUp && distance < pickupRange)
+            float distance = Vector3.Distance(player.position, weapon.transform.position);
+            if (distance <= pickupRange)
             {
-                pickupText.text = "Press F to Pick Up";
-                if (Keyboard.current.fKey.wasPressedThisFrame)
-                {
-                    OnPickup();
-                }
+                isInRange = true;
+                pickupText.text = "Press F to pickup";
             }
             else
             {
+                isInRange = false;
                 pickupText.text = "";
             }
 
-            if (isPickedUp && Keyboard.current.tKey.wasPressedThisFrame)
+            // Check for the F key press to initiate the pickup
+            if (isInRange && Keyboard.current.fKey.wasPressedThisFrame)
             {
-                OnDrop();
+                Pickup();
             }
+        }
+        else
+        {
+            pickupText.text = ""; // Clear the pickup text if the weapon has been picked up
         }
     }
 
-    private void PickUp()
+    public void Pickup()
     {
         weapon.transform.SetParent(transform);
         weapon.transform.localPosition = new Vector3(0.5f, 0.5f, 1f);
         weapon.transform.localRotation = Quaternion.identity;
-        isPickedUp = true;
-        pickupText.text = "";
-    }
+        // Add any additional logic you need for weapon pickup
 
-    private void DropWeapon()
-    {
-        weapon.transform.SetParent(null);
-        weapon.transform.position = transform.position + transform.forward; // Put the weapon in front of the player
-        weapon.transform.rotation = Quaternion.Euler(0f, 90f, 0f); // Rotate the weapon sideways
-        isPickedUp = false;
-    }
-
-    private void Shoot()
-    {
-        // Implement the shooting logic here, instantiate a bullet from the weapon's muzzle.
+        // Set the hasPickedUp boolean to true after picking up the weapon
+        hasPickedUp = true;
     }
 }

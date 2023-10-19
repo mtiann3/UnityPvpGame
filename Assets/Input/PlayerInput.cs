@@ -264,11 +264,112 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d1706e23-ba6b-4994-80bc-d069e6c5a494"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12492a39-aff5-4a8a-89bc-d4192efe96e9"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""OnWeapon"",
+            ""id"": ""d7dbf672-d9d6-4f16-b31f-223660887145"",
+            ""actions"": [
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""fbdf0772-3688-4abe-b788-655e9c53e156"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d725d85-6bac-468b-b93e-746f9614d5df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pickup"",
+                    ""type"": ""Button"",
+                    ""id"": ""3597893b-6968-4003-bf48-0f1df4b9b639"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""53f03485-44d4-4932-ba72-d5f06e1e072e"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0de8c675-f3c1-480d-a570-ba7c26372f04"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""030591d3-0da2-48c2-a905-b9e06eb3e48e"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f69ef034-28bd-4d53-aefe-422e39c62f03"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1aa44b67-29f4-47ea-a95a-7e715617ae94"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -284,6 +385,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Look = m_OnFoot.FindAction("Look", throwIfNotFound: true);
         m_OnFoot_Sprint = m_OnFoot.FindAction("Sprint", throwIfNotFound: true);
         m_OnFoot_Crouch = m_OnFoot.FindAction("Crouch", throwIfNotFound: true);
+        // OnWeapon
+        m_OnWeapon = asset.FindActionMap("OnWeapon", throwIfNotFound: true);
+        m_OnWeapon_Drop = m_OnWeapon.FindAction("Drop", throwIfNotFound: true);
+        m_OnWeapon_Shoot = m_OnWeapon.FindAction("Shoot", throwIfNotFound: true);
+        m_OnWeapon_Pickup = m_OnWeapon.FindAction("Pickup", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -419,6 +525,68 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public OnFootActions @OnFoot => new OnFootActions(this);
+
+    // OnWeapon
+    private readonly InputActionMap m_OnWeapon;
+    private List<IOnWeaponActions> m_OnWeaponActionsCallbackInterfaces = new List<IOnWeaponActions>();
+    private readonly InputAction m_OnWeapon_Drop;
+    private readonly InputAction m_OnWeapon_Shoot;
+    private readonly InputAction m_OnWeapon_Pickup;
+    public struct OnWeaponActions
+    {
+        private @PlayerInput m_Wrapper;
+        public OnWeaponActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Drop => m_Wrapper.m_OnWeapon_Drop;
+        public InputAction @Shoot => m_Wrapper.m_OnWeapon_Shoot;
+        public InputAction @Pickup => m_Wrapper.m_OnWeapon_Pickup;
+        public InputActionMap Get() { return m_Wrapper.m_OnWeapon; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OnWeaponActions set) { return set.Get(); }
+        public void AddCallbacks(IOnWeaponActions instance)
+        {
+            if (instance == null || m_Wrapper.m_OnWeaponActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_OnWeaponActionsCallbackInterfaces.Add(instance);
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Pickup.started += instance.OnPickup;
+            @Pickup.performed += instance.OnPickup;
+            @Pickup.canceled += instance.OnPickup;
+        }
+
+        private void UnregisterCallbacks(IOnWeaponActions instance)
+        {
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Pickup.started -= instance.OnPickup;
+            @Pickup.performed -= instance.OnPickup;
+            @Pickup.canceled -= instance.OnPickup;
+        }
+
+        public void RemoveCallbacks(IOnWeaponActions instance)
+        {
+            if (m_Wrapper.m_OnWeaponActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IOnWeaponActions instance)
+        {
+            foreach (var item in m_Wrapper.m_OnWeaponActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_OnWeaponActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public OnWeaponActions @OnWeapon => new OnWeaponActions(this);
     public interface IOnFootActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -426,5 +594,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+    }
+    public interface IOnWeaponActions
+    {
+        void OnDrop(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnPickup(InputAction.CallbackContext context);
     }
 }
