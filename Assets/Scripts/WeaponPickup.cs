@@ -8,9 +8,19 @@ public class WeaponPickup : MonoBehaviour
     public float pickupRange = 3f;
     public Transform player;
     public TextMeshProUGUI pickupText;
+    private Camera mainCamera;
 
     public bool isInRange = false;
     public bool hasPickedUp = false;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogError("Main camera not found.");
+        }
+    }
 
     private void Update()
     {
@@ -42,12 +52,12 @@ public class WeaponPickup : MonoBehaviour
 
     public void Pickup()
     {
-        weapon.transform.SetParent(transform);
-        weapon.transform.localPosition = new Vector3(0.5f, 0.5f, 1f);
-        weapon.transform.localRotation = Quaternion.identity;
-        // Add any additional logic you need for weapon pickup
-
-        // Set the hasPickedUp boolean to true after picking up the weapon
-        hasPickedUp = true;
+        if (!hasPickedUp)
+        {
+            weapon.transform.SetParent(mainCamera.transform);
+            weapon.transform.localPosition = new Vector3(0.35f, -0.2f, 1f); // Adjust the local position values
+            weapon.transform.localRotation = Quaternion.identity;
+            hasPickedUp = true;
+        }
     }
 }

@@ -44,14 +44,32 @@ public class WeaponInteraction : MonoBehaviour
     // Method to shoot the small sphere from the gun barrel
     public void Shoot()
     {
-        if (bulletPrefab != null && barrelEnd != null)
+        if (weaponPickup != null && weaponPickup.hasPickedUp)
         {
-            GameObject bullet = Instantiate(bulletPrefab, barrelEnd.position, barrelEnd.rotation);
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            if (bulletRigidbody != null)
+            if (bulletPrefab != null && barrelEnd != null)
             {
-                bulletRigidbody.AddForce(barrelEnd.forward * 20f, ForceMode.Impulse); // Adjust the force as needed
+                GameObject bullet = Instantiate(bulletPrefab, barrelEnd.position, barrelEnd.rotation);
+                Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+                if (bulletRigidbody != null)
+                {
+                    bulletRigidbody.AddForce(barrelEnd.forward * 20f, ForceMode.Impulse); // Adjust the force as needed
+                }
+
+                // Adding the script for destroying the bullet on collision
+                BulletCollision bulletCollision = bullet.GetComponent<BulletCollision>();
+                if (bulletCollision == null)
+                {
+                    bulletCollision = bullet.AddComponent<BulletCollision>();
+                }
             }
         }
+    }
+}
+
+public class BulletCollision : MonoBehaviour
+{
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject); // Destroy the bullet on collision
     }
 }
