@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PickupText
   - bullet
+  - bulletCountText
+  - weaponNameText
   layers:
   - Default
   - TransparentFX

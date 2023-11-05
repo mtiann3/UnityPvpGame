@@ -315,6 +315,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""233bfb4b-e6aa-43b8-be1b-146edbe7066c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -372,6 +381,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d3e6831-9945-488f-a2cb-ee4ef0b78caf"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -390,6 +410,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnWeapon_Drop = m_OnWeapon.FindAction("Drop", throwIfNotFound: true);
         m_OnWeapon_Shoot = m_OnWeapon.FindAction("Shoot", throwIfNotFound: true);
         m_OnWeapon_Pickup = m_OnWeapon.FindAction("Pickup", throwIfNotFound: true);
+        m_OnWeapon_Aim = m_OnWeapon.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,6 +553,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnWeapon_Drop;
     private readonly InputAction m_OnWeapon_Shoot;
     private readonly InputAction m_OnWeapon_Pickup;
+    private readonly InputAction m_OnWeapon_Aim;
     public struct OnWeaponActions
     {
         private @PlayerInput m_Wrapper;
@@ -539,6 +561,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_OnWeapon_Drop;
         public InputAction @Shoot => m_Wrapper.m_OnWeapon_Shoot;
         public InputAction @Pickup => m_Wrapper.m_OnWeapon_Pickup;
+        public InputAction @Aim => m_Wrapper.m_OnWeapon_Aim;
         public InputActionMap Get() { return m_Wrapper.m_OnWeapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -557,6 +580,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pickup.started += instance.OnPickup;
             @Pickup.performed += instance.OnPickup;
             @Pickup.canceled += instance.OnPickup;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
         }
 
         private void UnregisterCallbacks(IOnWeaponActions instance)
@@ -570,6 +596,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pickup.started -= instance.OnPickup;
             @Pickup.performed -= instance.OnPickup;
             @Pickup.canceled -= instance.OnPickup;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
         }
 
         public void RemoveCallbacks(IOnWeaponActions instance)
@@ -600,5 +629,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

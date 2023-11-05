@@ -44,6 +44,9 @@ public class InputManager : MonoBehaviour
         onWeapon.Pickup.performed += ctx => pickupWeapon.Pickup();
         onWeapon.Drop.performed += ctx => weaponInteraction.Drop();
         onWeapon.Shoot.performed += ctx => weaponInteraction.Shoot();
+        onWeapon.Aim.performed += ctx => weaponInteraction.ToggleADS(true);
+        onWeapon.Aim.canceled += ctx => weaponInteraction.ToggleADS(false);
+
 
     }
 
@@ -73,4 +76,5 @@ public class InputManager : MonoBehaviour
 
 
     }
+    
 }

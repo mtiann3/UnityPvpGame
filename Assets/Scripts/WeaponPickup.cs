@@ -1,6 +1,6 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -8,18 +8,20 @@ public class WeaponPickup : MonoBehaviour
     public float pickupRange = 3f;
     public Transform player;
     public TextMeshProUGUI pickupText;
-    private Camera mainCamera;
 
     public bool isInRange = false;
     public bool hasPickedUp = false;
 
+    public TextMeshProUGUI weaponNameText;
+    public TextMeshProUGUI bulletCountText;
+    public string weaponName = "Sniper Rifle";
+    public int maxBulletCount = 30;
+    private int currentBulletCount;
+
     private void Start()
     {
-        mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main camera not found.");
-        }
+        // Initialize bullet count
+        currentBulletCount = maxBulletCount;
     }
 
     private void Update()
@@ -47,17 +49,44 @@ public class WeaponPickup : MonoBehaviour
         else
         {
             pickupText.text = ""; // Clear the pickup text if the weapon has been picked up
+            ShowHUD();
         }
     }
 
     public void Pickup()
     {
-        if (!hasPickedUp)
+        if (!hasPickedUp && isInRange)
         {
-            weapon.transform.SetParent(mainCamera.transform);
-            weapon.transform.localPosition = new Vector3(0.35f, -0.2f, 1f); // Adjust the local position values
+            weapon.transform.SetParent(player);
+            weapon.transform.localPosition = new Vector3(0.5f, 0.5f, 1f);
             weapon.transform.localRotation = Quaternion.identity;
             hasPickedUp = true;
+            pickupText.text = ""; // Clear the pickup text after picking up the weapon
+        }
+    }
+
+    private void ShowHUD()
+    {
+        if (weaponNameText != null)
+        {
+            weaponNameText.gameObject.SetActive(true);
+            weaponNameText.text = weaponName;
+            // Position the weaponNameText on the bottom left of the screen
+            weaponNameText.rectTransform.anchorMin = new Vector2(0, 0);
+            weaponNameText.rectTransform.anchorMax = new Vector2(0, 0);
+            weaponNameText.rectTransform.pivot = new Vector2(0, 0);
+            weaponNameText.rectTransform.anchoredPosition = new Vector2(10, 10); // Adjust the position as needed
+        }
+
+        if (bulletCountText != null && currentBulletCount > 0)
+        {
+            bulletCountText.gameObject.SetActive(true);
+            bulletCountText.text = "Bullets: " + currentBulletCount; // Update the bullet count text
+            // Position the bulletCountText on the bottom right of the screen
+            bulletCountText.rectTransform.anchorMin = new Vector2(1, 0);
+            bulletCountText.rectTransform.anchorMax = new Vector2(1, 0);
+            bulletCountText.rectTransform.pivot = new Vector2(1, 0);
+            bulletCountText.rectTransform.anchoredPosition = new Vector2(-10, 10); // Adjust the position as needed
         }
     }
 }
