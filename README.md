@@ -1,7 +1,7 @@
 # UnityPvPGame
 
 ## Overview
-Welcome to UnityPvPGame! This project is still a work in progress, but it already includes the following features:
+Welcome to UnityPvPGame! (name still not yet decided) This project is still a work in progress, but it already includes the following features:
 - PVP Map
 - Player movement
 - Character and weapon objects
